@@ -58,6 +58,7 @@ Router::scope('/', function (RouteBuilder $routes) {
      * ...and connect the rest of 'Pages' controller's URLs.
      */
     $routes->connect('/admin/uao/crear', ['controller' => 'Admin', 'action' => 'create']);
+    $routes->connect('/admin/uao/resultados', ['controller' => 'Admin', 'action' => 'results']);
     $routes->connect('/uao/encuesta', ['controller' => 'Client', 'action' => 'view']);
 
     /**
