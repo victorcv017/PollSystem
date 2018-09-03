@@ -66,7 +66,7 @@ use Cake\Utility\Security;
  * that changes from configuration that does not. This makes deployment simpler.
  */
 try {
-    Plugin::load('ChartJs');
+   
     Configure::config('default', new PhpConfig());
     Configure::load('app', 'default', false);
 } catch (\Exception $e) {
