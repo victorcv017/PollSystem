@@ -8,8 +8,8 @@
     <select name="service" required>
         <option selected>Selecciona un Servicio</option>
         <option value="cafeteria">Cafeteria</option>
-        <option value="security">Vigilancia</option>
-        <option value="teachers">Docente</option>
+        <option value="seguridad">Vigilancia</option>
+        <option value="docente">Docente</option>
     </select>
     
     <hr>
