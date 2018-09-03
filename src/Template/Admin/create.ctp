@@ -38,16 +38,16 @@
 <?= $this->Html->script('jquery.min.js') ?>
 <script type="text/javascript">
     $("#newservice").click(function(){
-        $("#qservice").append("<div><label contenteditable='true'>Escriba el nombre de la pregunta</label><button type='button' onclick='remove(this)'>Eliminar</button><div>");
+        $("#qservice").append("<div><label contenteditable='true'>Escriba la pregunta</label><button type='button' onclick='remove(this)'>Eliminar</button><div>");
    
     });
     
     $("#newstaff").click(function(){
-        $("#qstaff").append("<div><label contenteditable='true'>Escriba el nombre de la pregunta</label><button type='button' onclick='remove(this)'>Eliminar</button><div>");
+        $("#qstaff").append("<div><label contenteditable='true'>Escriba la pregunta</label><button type='button' onclick='remove(this)'>Eliminar</button><div>");
     });
     
     $("#newopen").click(function(){
-        $("#qopen").append("<div><label contenteditable='true'>Escriba el nombre de la pregunta</label><button type='button' onclick='remove(this)'>Eliminar</button><div>");
+        $("#qopen").append("<div><label contenteditable='true'>Escriba la pregunta</label><button type='button' onclick='remove(this)'>Eliminar</button><div>");
     });
     
     function remove(e){

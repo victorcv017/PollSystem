@@ -1,10 +1,10 @@
-<h1> Encuesta : <?= h($form['name']) ?> </h1>
+<h1> Encuesta : <?= ucwords(h($form['name'])) ?> </h1>
 <p> Favor de contestar la siguiente encuesta. </p>
 
 <form  id="answer" method = "post" action='post'>
 <input hidden value="<?= $this->request->getParam('_csrfToken')?>" name="_csrfToken">    
 
-<h2>Servicio: <?= h($form['service']) ?> </h2> 
+<h2>Servicio: <?= ucwords(h($form['service'])) ?> </h2> 
 <?php $idx =0; ?>
 <?php foreach ($form['dservice'] as $question): ?>
     <?php $idx++; ?>
@@ -40,6 +40,7 @@
 <input hidden id="ansservice" name="ansservice">
 <input hidden id="ansstaff" name="ansstaff">
 <input hidden id="ansopen" name="ansopen">
+<input hidden id="dopen" value='<?php echo serialize($form['dopen']) ?>' name="dopen">
 
 </form>
 
