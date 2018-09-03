@@ -18,6 +18,7 @@ use Cake\Core\Configure;
 use Cake\Core\Exception\MissingPluginException;
 use Cake\Error\Middleware\ErrorHandlerMiddleware;
 use Cake\Http\BaseApplication;
+use ChartJs as ChartJs;
 use Cake\Http\Middleware\CsrfProtectionMiddleware;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
@@ -35,8 +36,11 @@ class Application extends BaseApplication
      */
     public function bootstrap()
     {
+        $this->addPlugin('ChartJs');
+
         // Call parent to load bootstrap from files.
         parent::bootstrap();
+        $this->addPlugin(ChartJs::class);
 
         if (PHP_SAPI === 'cli') {
             try {
