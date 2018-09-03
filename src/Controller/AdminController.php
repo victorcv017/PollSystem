@@ -19,7 +19,15 @@ class AdminController extends AppController {
         $this->render('/Admin/create');
     }
 
-    public function results() {
+    public function results($answers) {
+       
+        $form = unserialize($answers);
+        var_dump($form);
+        /*$form['ansservice'] = json_decode($answers['ansservice']);
+        $form['ansstaff'] = json_decode($answers['ansstaff']);
+        $form['ansopen'] = json_decode($answers['ansopen']);
+        
+        //$this->set('answers', $form);*/
         $this->render('/Admin/results');
     }
 
