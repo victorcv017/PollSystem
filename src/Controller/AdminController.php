@@ -5,6 +5,7 @@ namespace App\Controller;
 class AdminController extends AppController {
 
     public function create() {
+        $this->viewBuilder()->setLayout('admin');
         if ($this->request->is('post')) {
             $data = $this->request->getData();
             $this->set('data',$data);

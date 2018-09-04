@@ -60,6 +60,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/admin/uao/crear', ['controller' => 'Admin', 'action' => 'create']);
     $routes->connect('/admin/uao/resultados', ['controller' => 'Admin', 'action' => 'results']);
     $routes->connect('/uao/encuesta', ['controller' => 'Client', 'action' => 'view']);
+    $routes->connect('/test', ['controller' => 'Test', 'action' => 'test']);
 
     /**
      * Connect catchall routes for all controllers.
