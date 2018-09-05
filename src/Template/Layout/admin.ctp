@@ -14,7 +14,7 @@
      <?= $this->Html->meta('icon') ?>
     
     <!-- Bootstrap CSS CDN -->
-    <?= $this->Html->css('bootstrap.min.css') ?>
+    <?= $this->Html->css('custom') ?>
     <!-- Our Custom CSS -->
     <?= $this->Html->css('sidebar.css') ?>
 
