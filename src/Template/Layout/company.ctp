@@ -40,14 +40,14 @@
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Areas</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
                         <li>
-                            <a href="#">Cafe</a>
+                            <?= $this->Html->link(('Nueva Area'), ['controller'=>'Areas','action' => 'add']) ?>
                         </li>
-                        <li>
-                            <a href="#">Vigilancia</a>
-                        </li>
-                        <li>
-                            <a href="#">Page 3</a>
-                        </li>
+                        <?php foreach ($areas as $area): ?>
+                            <li>
+                                
+                                <?= $this->Html->link("$area[1]", ['controller'=>'Areas','action' => 'view', $area[0]]) ?>
+                            </li>
+                        <?php endforeach; ?>
                     </ul>
                 </li>
                 <li>

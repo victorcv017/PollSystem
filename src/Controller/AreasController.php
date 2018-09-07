@@ -20,14 +20,36 @@ class AreasController extends AppController
      */
     public function index()
     {
+        //$this->viewBuilder()->setLayout('company');
         $this->paginate = [
             'contain' => ['Companies']
         ];
         $areas = $this->paginate($this->Areas);
-
         $this->set(compact('areas'));
+        //var_dump($areas);
+        //var_dump(compact($areas));
+        
+        
+        
     }
 
+     /**
+     * Show method
+     *
+     * @return \Cake\Http\Response|void
+     */
+    public function show()
+    {
+        $this->viewBuilder()->setLayout('company');
+        $this->paginate = [
+            'contain' => ['Companies']
+        ];
+        $areas = $this->paginate($this->Areas);
+    
+
+        $this->set(compact('area'));
+        //$this->render('index');
+    }
     /**
      * View method
      *
@@ -51,9 +73,13 @@ class AreasController extends AppController
      */
     public function add()
     {
+        $user = $this->Auth->user();
+        //var_dump($user);
+        $this->viewBuilder()->setLayout('company');
         $area = $this->Areas->newEntity();
         if ($this->request->is('post')) {
             $area = $this->Areas->patchEntity($area, $this->request->getData());
+            $area->company_id = $this->Auth->user('id');
             if ($this->Areas->save($area)) {
                 $this->Flash->success(__('The area has been saved.'));
 
@@ -109,4 +135,24 @@ class AreasController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+    
+    public function isAuthorized($user) {
+        $action = $this->request->getParam('action');
+        // The add and tags actions are always allowed to logged in users.
+        if (in_array($action, ['add','view'])) {
+            return true;
+        }
+
+        // All other actions require a slug.
+        $slug = $this->request->getParam('pass.0');
+        if (!$slug) {
+            return false;
+        }
+
+        // Check that the article belongs to the current user.
+        $area = $this->Areas->findBySlug($slug)->first();
+
+        return $area->company_id === $user['id'];
+    }
+
 }

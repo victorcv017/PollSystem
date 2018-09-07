@@ -68,7 +68,8 @@ class AreasTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->integer('name')
+            ->scalar('name')
+            ->maxLength('name', 255)
             ->requirePresence('name', 'create')
             ->notEmpty('name');
 

@@ -66,4 +66,8 @@ class PagesController extends AppController
             throw new NotFoundException();
         }
     }
+    
+    public function start(){
+        return $this->render('/Common/home');
+    }
 }

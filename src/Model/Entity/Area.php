@@ -7,7 +7,7 @@ use Cake\ORM\Entity;
  * Area Entity
  *
  * @property int $id
- * @property int $name
+ * @property string $name
  * @property int $company_id
  *
  * @property \App\Model\Entity\Company $company
