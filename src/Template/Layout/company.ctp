@@ -88,13 +88,13 @@
                                 <a class="btn btn-info" href="#">Crear</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
+                                <a class="nav-link" href="<?= $this->request->referer();?>">Atras</a>
+                            <li>
+                            <li class="nav-item">
+                                <?= $this->Html->link(__('Editar'), ['action' => 'edit', $area[0]], ['class' => 'nav-link']) ?> 
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
+                                <?= $this->Form->postLink(__('Borrar'),['action' => 'delete', $area[0]],  ['class' => 'nav-link' , 'confirm' => __('¿Estas seguro de querer eliminar?', $area[0])]) ?>
                             </li>
                         </ul>
                     </div>

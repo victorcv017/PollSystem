@@ -20,12 +20,14 @@ class AreasController extends AppController
      */
     public function index()
     {
-        //$this->viewBuilder()->setLayout('company');
+        $user = $this->Auth->user();
+        $this->viewBuilder()->setLayout('company');
         $this->paginate = [
             'contain' => ['Companies']
         ];
-        $areas = $this->paginate($this->Areas);
-        $this->set(compact('areas'));
+        $areasp = $this->paginate($this->Areas);
+        $this->set(compact('areasp'));
+        $this->set('areas', $this->getAreas($user['id']));
         //var_dump($areas);
         //var_dump(compact($areas));
         
@@ -59,11 +61,14 @@ class AreasController extends AppController
      */
     public function view($id = null)
     {
+        $user = $this->Auth->user();
+        $this->viewBuilder()->setLayout('company');
         $area = $this->Areas->get($id, [
             'contain' => ['Companies', 'Employees', 'Polls', 'Services']
         ]);
 
         $this->set('area', $area);
+        $this->set('areas', $this->getAreas($user['id']));
     }
 
     /**
@@ -89,6 +94,8 @@ class AreasController extends AppController
         }
         $companies = $this->Areas->Companies->find('list', ['limit' => 200]);
         $this->set(compact('area', 'companies'));
+        
+        $this->set('areas', $this->getAreas($user['id']));
     }
 
     /**
@@ -100,6 +107,9 @@ class AreasController extends AppController
      */
     public function edit($id = null)
     {
+        $user = $this->Auth->user();
+        //var_dump($user);
+        $this->viewBuilder()->setLayout('company');
         $area = $this->Areas->get($id, [
             'contain' => []
         ]);
@@ -114,6 +124,7 @@ class AreasController extends AppController
         }
         $companies = $this->Areas->Companies->find('list', ['limit' => 200]);
         $this->set(compact('area', 'companies'));
+        $this->set('areas', $this->getAreas($user['id']));
     }
 
     /**
@@ -153,6 +164,18 @@ class AreasController extends AppController
         $area = $this->Areas->findBySlug($slug)->first();
 
         return $area->company_id === $user['id'];
+    }
+    
+    private function getAreas($id){
+        $query = $this->Areas->find('all')
+                ->where(['company_id ' => $id])
+                ->toList();
+       
+        $result = [];
+        foreach($query as $q){
+            $result[] = [$q->id,$q->name];
+        }
+        return $result;
     }
 
 }

@@ -133,9 +133,9 @@ class CompaniesController extends AppController {
                 'controller' => 'Companies',
                 'action' => 'login'
                 ],
-                'authorize',['Controller'],
-                'unauthorizedRedirect',[$this->referer()]);
-        
+                'authorize',['Controller']);
+        $this->Auth->unauthorizedRedirect = false;
+
 
         
     }

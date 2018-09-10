@@ -9,13 +9,13 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($areas as $area): ?>
+            <?php foreach ($areasp as $area): ?>
             <tr>
                 <td><?= h($area->name) ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $area->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $area->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $area->id], ['confirm' => __('Are you sure you want to delete # {0}?', $area->id)]) ?>
+                    <?= $this->Html->link(__('Ver'), ['action' => 'view', $area->id]) ?>
+                    <?= $this->Html->link(__('Editar'), ['action' => 'edit', $area->id]) ?>
+                    <?= $this->Form->postLink(__('Borrar'), ['action' => 'delete', $area->id], ['confirm' => __('¿Estas seguro de querer eliminar?', $area->id)]) ?>
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -24,11 +24,11 @@
     <div class="paginator">
         <ul class="pagination">
             <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
+            <?= $this->Paginator->prev('< ' . __('anterior')) ?>
             <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
+            <?= $this->Paginator->next(__('siguiente') . ' >') ?>
             <?= $this->Paginator->last(__('last') . ' >>') ?>
         </ul>
-        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
+        <p><?= $this->Paginator->counter(['format' => __('Pagina {{page}} de {{pages}}, mostrando {{current}} registro(s) de un total de {{count}}')]) ?></p>
     </div>
 </div>
