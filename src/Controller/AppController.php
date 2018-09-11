@@ -46,7 +46,7 @@ class AppController extends Controller
         ]);
         $this->loadComponent('Flash');
         $this->loadComponent('Auth');
-        $this->Auth->allow(['logout','login','start','test']);
+        $this->Auth->allow(['logout','login','start','test','index','view','add','delete','edit','home']);
         $this->Auth->unauthorizedRedirect = false;
 
                 
