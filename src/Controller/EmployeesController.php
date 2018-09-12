@@ -118,6 +118,7 @@ class EmployeesController extends AppController
     
     
     public function login() {
+        $this->viewBuilder()->setLayout('login');
         if ($this->request->is('post')) {
             $user = $this->Auth->identify();
             if ($user) {

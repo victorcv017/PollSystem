@@ -10,7 +10,7 @@
                     Iniciar Sesión / Empresa
                 </span>
 
-                <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+                <div class="wrap-input100 validate-input" data-validate = "Email valido requerido ej: alguien@dominio.com">
                     <input class="input100" type="text" name="RFC" placeholder="RFC">
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
@@ -18,8 +18,8 @@
                     </span>
                 </div>
 
-                <div class="wrap-input100 validate-input" data-validate = "Password is required">
-                    <input class="input100" type="password" name="password" placeholder="Password">
+                <div class="wrap-input100 validate-input" data-validate = "Contraseña requerida">
+                    <input class="input100" type="password" name="password" placeholder="Contraseña">
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
                         <i class="fa fa-lock" aria-hidden="true"></i>

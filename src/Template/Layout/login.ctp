@@ -15,15 +15,15 @@
 
         <!-- CSS -->
         <?= $this->Html->css('custom') ?>
-        <?= $this->Html->css('font-awesome.min.css') ?>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+              crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
         <?= $this->Html->css('vendor/animate/animate.css') ?>
         <?= $this->Html->css('vendor/css-hamburgers/hamburgers.min.css') ?>
         <?= $this->Html->css('vendor/select2/select2.min.css') ?>
         <?= $this->Html->css('login/util.css') ?>
         <?= $this->Html->css('login/main.css') ?>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
-              crossorigin="anonymous">
-        <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+        
 
     </head>
 
