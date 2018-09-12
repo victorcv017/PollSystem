@@ -106,47 +106,10 @@ class CompaniesController extends AppController {
 
         return $this->redirect(['action' => 'index']);
     }
-
-    public function login() {
-        if ($this->request->is('post')) {
-            $user = $this->Auth->identify();
-            if ($user) {
-                $this->Auth->setUser($user);
-                return $this->redirect(['action' => 'home']);
-            }
-            $this->Flash->error('Tu usuario o contraseña son inválidos.');
-        }
-    }
-
-    public function initialize() {
-        parent::initialize();
-        $this->Auth
-        ->config('authenticate',
-                ['Form' => [
-                    'userModel' => 'Companies',
-                    'fields' => [
-                        'username' => 'RFC',
-                        'password' => 'password'
-                    ]
-                ]],
-                'loginAction',[
-                'controller' => 'Companies',
-                'action' => 'login'
-                ],
-                'authorize',['Controller']);
-        $this->Auth->unauthorizedRedirect = false;
-
-
-        
-    }
-
-    public function logout() {
-        $this->Flash->success('Haz cerrado sesión');
-        return $this->redirect($this->Auth->logout());
-    }
-
+    
     public function home() {
         $user = $this->Auth->user();
+        var_dump($user);
         $this->viewBuilder()->setLayout('company');
         $areas = TableRegistry::get('Areas');   
         $query = $areas->find('all')
@@ -161,12 +124,28 @@ class CompaniesController extends AppController {
         //var_dump($result);
         $this->render('/test');
     }
-
-    public function isAuthorized($user) {
-        if ($user['id'])
-            return true;
-        // By default deny access.
-        return false;
+    
+    public function login() {
+        $this->viewBuilder()->setLayout('login');
+        if ($this->request->is('post')) {
+            $user = $this->Auth->identify();
+            if ($user) {
+                $this->Auth->setUser($user);
+                return $this->redirect(['action' => 'home']);
+            }
+            $this->Flash->error('Tu usuario o contraseña son inválidos.');
+        }
     }
 
+    public function logout() {
+        $this->Flash->success('Haz cerrado sesión');
+        return $this->redirect($this->Auth->logout());
+    }
+
+    public function isAuthorized($user = null) {
+        if ($user['RFC'])
+            return true;
+        return false;
+    }
+    
 }

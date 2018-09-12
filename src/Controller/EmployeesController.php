@@ -111,4 +111,31 @@ class EmployeesController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+    
+    public function home() {
+        var_dump($user = $this->Auth->user());
+    }
+    
+    
+    public function login() {
+        if ($this->request->is('post')) {
+            $user = $this->Auth->identify();
+            if ($user) {
+                $this->Auth->setUser($user);
+                return $this->redirect(['action' => 'home']);
+            }
+            $this->Flash->error('Tu usuario o contraseña son inválidos.');
+        }
+    }
+    
+    public function logout() {
+        $this->Flash->success('Haz cerrado sesión');
+        return $this->redirect($this->Auth->logout());
+    }
+    
+    public function isAuthorized($user = null) {
+        if ($user['email'])
+            return true;
+        return false;
+    }
 }

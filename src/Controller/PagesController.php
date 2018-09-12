@@ -68,6 +68,7 @@ class PagesController extends AppController
     }
     
     public function start(){
+        $this->viewBuilder()->setLayout('login');
         return $this->render('/Common/home');
     }
 }

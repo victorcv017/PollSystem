@@ -15,7 +15,6 @@
 namespace App\Controller;
 
 use Cake\Controller\Controller;
-use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -46,11 +45,31 @@ class AppController extends Controller
             'enableBeforeRedirect' => false,
         ]);
         $this->loadComponent('Flash');
-        $this->loadComponent('Auth');
-        $this->Auth->allow(['logout','login','start','test','index','view','add','delete','edit','home']);
-        $this->Auth->unauthorizedRedirect = false;
-        
+        $this->loadComponent('Auth', [
+            'authenticate' => [
+                'Employee' => [
+                    'fields' => [
+                        'username' => 'email',
+                        'password' => 'password'
+                    ],
+                    'userModel' => 'Employees',
+                ],
+                'Company' => [
+                    'fields' => [
+                        'username' => 'RFC',
+                        'password' => 'password'
+                    ],
+                    'userModel' => 'Companies',
+                ],
+            ],
+             //use isAuthorized in Controllers
+            'authorize' => ['Controller'],
+             // If unauthorized, return them to page they were just on
+            'unauthorizedRedirect' => $this->referer(),
+            'loginAction' => '/start'
+        ]);
 
+        $this->Auth->allow(['logout', 'login', 'start', 'test','add','delete','edit','index', 'view','home']);
         
         /*
          * Enable the following component for recommended CakePHP security settings.

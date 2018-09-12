@@ -109,4 +109,11 @@ class ServicesController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+    
+    public function isAuthorized($user) {
+        if ($user['id'])
+            return true;
+        // By default deny access.
+        return false;
+    }
 }
