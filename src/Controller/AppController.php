@@ -16,6 +16,7 @@ namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
 
 /**
  * Application Controller
@@ -48,8 +49,8 @@ class AppController extends Controller
         $this->loadComponent('Auth');
         $this->Auth->allow(['logout','login','start','test']);
         $this->Auth->unauthorizedRedirect = false;
+        
 
-                
         
         /*
          * Enable the following component for recommended CakePHP security settings.
@@ -60,6 +61,19 @@ class AppController extends Controller
         // Allow the display action so our PagesController
         // continues to work. Also enable the read only actions.
         //$this->Auth->allow(['display', 'view', 'index']);
+    }
+
+    public function getAreas($id){
+
+        $query = TableRegistry::get('Areas')->find('all')
+                ->where(['company_id ' => $id])
+                ->toList();
+       
+        $result = [];
+        foreach($query as $q){
+            $result[] = [$q->id,$q->name];
+        }
+        return $result;
     }
     
 

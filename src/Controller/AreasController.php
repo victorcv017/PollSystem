@@ -68,7 +68,9 @@ class AreasController extends AppController
         ]);
 
         $this->set('area', $area);
-        $this->set('areas', $this->getAreas($user['id']));
+        $this->set('areas', 
+        
+        parent::getAreas($user['id']));
     }
 
     /**
@@ -94,7 +96,6 @@ class AreasController extends AppController
         }
         $companies = $this->Areas->Companies->find('list', ['limit' => 200]);
         $this->set(compact('area', 'companies'));
-        
         $this->set('areas', $this->getAreas($user['id']));
     }
 
@@ -124,7 +125,8 @@ class AreasController extends AppController
         }
         $companies = $this->Areas->Companies->find('list', ['limit' => 200]);
         $this->set(compact('area', 'companies'));
-        $this->set('areas', $this->getAreas($user['id']));
+        //var_dump($user['id']);
+        $this->set('areas',  parent::getAreas($user['id']));
     }
 
     /**
@@ -165,17 +167,11 @@ class AreasController extends AppController
 
         return $area->company_id === $user['id'];
     }
-    
-    private function getAreas($id){
-        $query = $this->Areas->find('all')
-                ->where(['company_id ' => $id])
-                ->toList();
-       
-        $result = [];
-        foreach($query as $q){
-            $result[] = [$q->id,$q->name];
-        }
-        return $result;
+
+    public function initialize()
+    {
+        parent::initialize();
     }
+    
 
 }

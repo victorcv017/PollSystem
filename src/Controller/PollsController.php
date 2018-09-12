@@ -20,12 +20,16 @@ class PollsController extends AppController
      */
     public function index()
     {
+        $user = $this->Auth->user();
+        $this->viewBuilder()->setLayout('company');
         $this->paginate = [
             'contain' => ['Areas']
         ];
         $polls = $this->paginate($this->Polls);
 
         $this->set(compact('polls'));
+        //var_dump($user['id']);
+        $this->set('areas', parent::getAreas($user['id']));
     }
 
     /**
@@ -65,6 +69,7 @@ class PollsController extends AppController
         $questions = $this->Polls->Questions->find('list', ['limit' => 200]);
         $respondents = $this->Polls->Respondents->find('list', ['limit' => 200]);
         $this->set(compact('poll', 'areas', 'questions', 'respondents'));
+        $this->set('areas', parent::getAreas($user['id']));
     }
 
     /**
@@ -112,5 +117,10 @@ class PollsController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+    
+    public function initialize()
+    {
+        parent::initialize();
     }
 }

@@ -34,9 +34,9 @@
             </div>
 
             <ul class="list-unstyled components">
-                <p>Panel de Administración</p>
+                <?= $this->Html->link(('Panel de Administración'), ['controller'=>'Companies','action' => 'home']) ?>
                 <li>
-                    <a href="#">Encuestas</a>
+                    <?= $this->Html->link(('Encuestas'), ['controller'=>'Polls','action' => 'index']) ?>
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Areas</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
                         <li>

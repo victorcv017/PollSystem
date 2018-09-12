@@ -1,26 +1,3 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Poll $poll
- */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Edit Poll'), ['action' => 'edit', $poll->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Poll'), ['action' => 'delete', $poll->id], ['confirm' => __('Are you sure you want to delete # {0}?', $poll->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Polls'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Poll'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Areas'), ['controller' => 'Areas', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Area'), ['controller' => 'Areas', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Settings'), ['controller' => 'Settings', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Setting'), ['controller' => 'Settings', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Questions'), ['controller' => 'Questions', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Question'), ['controller' => 'Questions', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Respondents'), ['controller' => 'Respondents', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Respondent'), ['controller' => 'Respondents', 'action' => 'add']) ?> </li>
-    </ul>
-</nav>
 <div class="polls view large-9 medium-8 columns content">
     <h3><?= h($poll->name) ?></h3>
     <table class="vertical-table">
@@ -46,14 +23,14 @@
         <?php if (!empty($poll->questions)): ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
-                <th scope="col"><?= __('Id') ?></th>
+               
                 <th scope="col"><?= __('Content') ?></th>
                 <th scope="col"><?= __('Answer Id') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($poll->questions as $questions): ?>
             <tr>
-                <td><?= h($questions->id) ?></td>
+                
                 <td><?= h($questions->content) ?></td>
                 <td><?= h($questions->answer_id) ?></td>
                 <td class="actions">
