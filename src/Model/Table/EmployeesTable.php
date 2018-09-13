@@ -76,7 +76,35 @@ class EmployeesTable extends Table
             ->scalar('phone')
             ->maxLength('phone', 20)
             ->requirePresence('phone', 'create')
-            ->notEmpty('phone');
+            ->notEmpty('phone')
+            ->add('phone', 'validFormat',[
+                'rule' => array('custom', '/^[0-9]( ?[0-9]){8} ?[0-9]$/'),
+                'message' => 'El numero de telefono debe tener 10 digitos',
+                'phone' => array(
+                    'phone-1' => array(
+                        'required'   => true,
+                        'allowEmpty' => false,
+                        'last'       => true,
+                        'rule'       => 'notEmpty',
+                        'message'    => 'This field cannot be left blank'
+                    ),
+                    'phone-2' => array(
+                        'last'       => true,
+                        'rule'       => array('minLength', 10),
+                        'message'    => 'This field has a minimum length of 10 characters'
+                    ),
+                    'phone-3' => array(
+                        'last'       => true,
+                        'rule'       => array('maxLength', 14),
+                        'message'    => 'This field has a maximum length of 14 characters'
+                    ),
+                    'phone-4' => array(
+                        'last'       => true,
+                        'rule'       => array('phone', '/^[0-9]( ?[0-9]){8} ?[0-9]$/'), 
+                        'message'    => 'Please enter a valid 10 digit phone number (digits and spaces only)'
+                    )
+                ) 
+                ]);
 
         $validator
             ->email('email')
@@ -112,4 +140,7 @@ class EmployeesTable extends Table
 
         return $rules;
     }
+
+
+   
 }
