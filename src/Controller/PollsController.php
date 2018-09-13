@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
 
 /**
  * Polls Controller
@@ -10,16 +12,14 @@ use App\Controller\AppController;
  *
  * @method \App\Model\Entity\Poll[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class PollsController extends AppController
-{
+class PollsController extends AppController {
 
     /**
      * Index method
      *
      * @return \Cake\Http\Response|void
      */
-    public function index()
-    {
+    public function index() {
         $user = $this->Auth->user();
         $this->viewBuilder()->setLayout('company');
         $this->paginate = [
@@ -39,13 +39,15 @@ class PollsController extends AppController
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
+        $user = $this->Auth->user();
+        $this->viewBuilder()->setLayout('company');
         $poll = $this->Polls->get($id, [
             'contain' => ['Areas', 'Questions', 'Respondents', 'Settings']
         ]);
 
         $this->set('poll', $poll);
+        $this->set('areas', parent::getAreas($user['id']));
     }
 
     /**
@@ -53,23 +55,93 @@ class PollsController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add($type = null) {
+        $user = $this->Auth->user();
+        $this->viewBuilder()->setLayout('company');
         $poll = $this->Polls->newEntity();
-        if ($this->request->is('post')) {
-            $poll = $this->Polls->patchEntity($poll, $this->request->getData());
-            if ($this->Polls->save($poll)) {
-                $this->Flash->success(__('The poll has been saved.'));
-
+        $areas = parent::getAreas($user['id']);
+        $this->set('areas', $areas);
+        switch ($type) {
+            case "user":
+                $values = [];
+                foreach ($areas as $key => $value) {
+                    $values[] = $key;
+                }
+                //var_dump($values);
+                $query = TableRegistry::get('Employees')->find('all', array(
+                    'conditions' => array('Employees.area_id IN' => $values)
+                ));
+                $result = array();
+                foreach($query as $employee){
+                    $result[] = $employee;
+                }
+                $this->set('employees', $result);
+                $this->render('add_employee');
+                break;
+            case "area":
+                $this->render('add_area');
+                break;
+            case "service":
+                $query = $this->Polls->Areas->find('all')->where(['company_id ' => $user['id']])->contain('Services');
+                $result = array();
+                foreach ($query as $area) {
+                    if ($area->services) {
+                        //var_dump($area->services);
+                        $result = array_merge($result, $area->services);
+                    }
+                }
+                $this->set('services', $result);
+                $this->render('add_service');
+                break;
+            default :
                 return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The poll could not be saved. Please, try again.'));
         }
-        $areas = $this->Polls->Areas->find('list', ['limit' => 200]);
-        $questions = $this->Polls->Questions->find('list', ['limit' => 200]);
-        $respondents = $this->Polls->Respondents->find('list', ['limit' => 200]);
-        $this->set(compact('poll', 'areas', 'questions', 'respondents'));
-        $this->set('areas', parent::getAreas($user['id']));
+        if ($this->request->is('post')) {
+            $request = $this->request->getData();
+            $data = [
+                'name' => $request['name'],
+                'area_id' => $request['area'],
+                'created_at' => new \DateTime('now')
+            ];
+            //var_dump($request);die;
+            $dservice = json_decode($request['dservice'], true);
+            $dstaff = json_decode($request['dstaff'], true);
+            $dopen = json_decode($request['dopen'], true);
+            $questions = [];
+            foreach ($dservice as $q) {
+                $question = $this->Polls->Questions->newEntity([
+                    'content' => $q
+                ]);
+                $this->Polls->Questions->save($question);
+                $questions[] = ['id' => $question->id];
+            }
+            foreach ($dstaff as $q) {
+                $question = $this->Polls->Questions->newEntity([
+                    'content' => $q
+                ]);
+                $this->Polls->Questions->save($question);
+                $questions[] = ['id' => $question->id];
+            }
+            foreach ($dopen as $q) {
+                $question = $this->Polls->Questions->newEntity([
+                    'content' => $q
+                ]);
+                $this->Polls->Questions->save($question);
+                $questions[] = ['id' => $question->id];
+            }
+
+            $data['questions'] = $questions;
+            $this->Polls->patchEntity($poll, $data, [
+                'associated' => ['Questions']
+            ]);
+            if ($this->Polls->save($poll)) {
+                $this->Flash->success(__('Encuesta Guardada'));
+                return $this->redirect(['action' => 'index']);
+            } else
+                $this->Flash->error(__('La encuesta no se pudo guardad,intente de nuevo.'));
+            //var_dump($poll, $dservice, $dstaff, $dopen, $questions);
+            //die;
+        }
     }
 
     /**
@@ -79,8 +151,9 @@ class PollsController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
+        $user = $this->Auth->user();
+        $this->viewBuilder()->setLayout('company');
         $poll = $this->Polls->get($id, [
             'contain' => ['Questions', 'Respondents']
         ]);
@@ -96,7 +169,8 @@ class PollsController extends AppController
         $areas = $this->Polls->Areas->find('list', ['limit' => 200]);
         $questions = $this->Polls->Questions->find('list', ['limit' => 200]);
         $respondents = $this->Polls->Respondents->find('list', ['limit' => 200]);
-        $this->set(compact('poll', 'areas', 'questions', 'respondents'));
+        $this->set(compact('poll', 'areasp', 'questions', 'respondents'));
+        $this->set('areas',parent::getAreas($user['id']));
     }
 
     /**
@@ -106,8 +180,7 @@ class PollsController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $poll = $this->Polls->get($id);
         if ($this->Polls->delete($poll)) {
@@ -118,9 +191,9 @@ class PollsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
-    
-    public function initialize()
-    {
+
+    public function initialize() {
         parent::initialize();
     }
+
 }

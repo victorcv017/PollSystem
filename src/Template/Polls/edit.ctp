@@ -4,7 +4,7 @@
         <legend><?= __('Edit Poll') ?></legend>
         <?php
             echo $this->Form->control('name');
-            echo $this->Form->control('area_id', ['options' => $areas]);
+            echo $this->Form->control('area_id', ['options' => $areasp]);
             echo $this->Form->control('created_at');
             echo $this->Form->control('questions._ids', ['options' => $questions]);
             echo $this->Form->control('respondents._ids', ['options' => $respondents]);

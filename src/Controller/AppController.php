@@ -90,7 +90,7 @@ class AppController extends Controller
        
         $result = [];
         foreach($query as $q){
-            $result[] = [$q->id,$q->name];
+            $result[$q->id] = $q->name;
         }
         return $result;
     }

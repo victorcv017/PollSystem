@@ -21,6 +21,12 @@
     <!-- Font Awesome JS -->
     <?= $this->Html->script('solid.js') ?>
     <?= $this->Html->script('fontawesome.min.js') ?>
+    <!-- jQuery CDN - Slim version (=without AJAX) -->
+    <?= $this->Html->script('jquery.min.js') ?>
+    <!-- Popper.JS -->
+    <?= $this->Html->script('popper.min.js') ?>
+    <!-- Bootstrap JS -->
+    <?= $this->Html->script('bootstrap.min.js') ?>
     
 </head>
 
@@ -32,7 +38,6 @@
             <div class="sidebar-header">
                 <h3>Bienvenido</h3>
             </div>
-
             <ul class="list-unstyled components">
                 <?= $this->Html->link(('Panel de Administración'), ['controller'=>'Companies','action' => 'home']) ?>
                 <li>
@@ -42,10 +47,10 @@
                         <li>
                             <?= $this->Html->link(('Nueva Area'), ['controller'=>'Areas','action' => 'add']) ?>
                         </li>
-                        <?php foreach ($areas as $area): ?>
+                        <?php foreach ($areas as $key => $value): ?>
                             <li>
                                 
-                                <?= $this->Html->link("$area[1]", ['controller'=>'Areas','action' => 'view', $area[0]]) ?>
+                                <?= $this->Html->link("$value", ['controller'=>'Areas','action' => 'view', $key]) ?>
                             </li>
                         <?php endforeach; ?>
                     </ul>
@@ -84,18 +89,26 @@
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
-                            <li class="nav-item active">
-                                <a class="btn btn-info" href="#">Crear</a>
-                            </li>
-                            <li class="nav-item">
+                            <li class="nav-item text-left">
                                 <a class="nav-link" href="<?= $this->request->referer();?>">Atras</a>
                             <li>
-                            <li class="nav-item">
-                                <?= $this->Html->link(__('Editar'), ['action' => 'edit', $area[0]], ['class' => 'nav-link']) ?> 
-                            </li>
-                            <li class="nav-item">
-                                <?= $this->Form->postLink(__('Borrar'),['action' => 'delete', $area[0]],  ['class' => 'nav-link' , 'confirm' => __('¿Estas seguro de querer eliminar?', $area[0])]) ?>
-                            </li>
+                            <?php  if($this->request->getParam('action') == "index" 
+                                    || $this->request->getParam('action') == "view"
+                                    || $this->request->getParam('action') == "edit"):
+                            ?>
+                                <li class="nav-item">
+                                    <?= $this->Html->link(__('Crear'), ['action' => 'add'], ['class' => 'btn btn-info', 'id' => 'create']) ?> 
+                                </li>
+                            <?php endif; ?>
+                            <?php  if($this->request->getParam('action') == "view"): ?>
+                                <li class="nav-item">
+                                    <?= $this->Html->link(__('Editar'), ['action' => 'edit', $this->request->getParam('pass')[0]], ['class' => 'nav-link']) ?>
+                                </li>
+                                <li class="nav-item">
+                                    <?= $this->Form->postLink(__('Borrar'), ['action' => 'delete', $this->request->getParam('pass')[0]], ['class' => 'nav-link', 'confirm' => __('¿Estas seguro de querer eliminar?', $this->request->getParam('pass')[0])]) ?>
+                                </li>
+                            <?php endif; ?>
+                            
                         </ul>
                     </div>
                 </div>
@@ -105,13 +118,9 @@
             </div>
         </div>
     </div>
+    <?php echo $this->fetch('modal');  ?>
 
-    <!-- jQuery CDN - Slim version (=without AJAX) -->
-    <?= $this->Html->script('jquery.min.js') ?>
-    <!-- Popper.JS -->
-    <?= $this->Html->script('popper.min.js') ?>
-    <!-- Bootstrap JS -->
-    <?= $this->Html->script('bootstrap.min.js') ?>
+    
     
     <script type="text/javascript">
         $(document).ready(function () {
