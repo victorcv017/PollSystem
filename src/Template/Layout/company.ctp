@@ -39,7 +39,9 @@
                 <h3>Bienvenido</h3>
             </div>
             <ul class="list-unstyled components">
-                <?= $this->Html->link(('Panel de Administración'), ['controller'=>'Companies','action' => 'home']) ?>
+                <li>
+                    <?= $this->Html->link(('Panel de Administración'), ['controller'=>'Companies','action' => 'home']) ?>
+                </li>
                 <li>
                     <?= $this->Html->link(('Encuestas'), ['controller'=>'Polls','action' => 'index']) ?>
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Areas</a>
@@ -56,7 +58,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#">Empleados</a>
+                    <?= $this->Html->link(('Empleados'), ['controller'=>'Employees','action' => 'index']) ?>
                 </li>
                 <li>
                     <a href="#">Notificaciones</a>
@@ -66,6 +68,9 @@
                 </li>
                 <li>
                     <a href="#">Configuración</a>
+                </li>
+                <li>
+                    <?= $this->Html->link(('Cerrar sesión'), ['controller'=>'Companies','action' => 'logout']) ?>
                 </li>
             </ul>
 

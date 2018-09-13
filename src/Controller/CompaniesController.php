@@ -109,20 +109,9 @@ class CompaniesController extends AppController {
     
     public function home() {
         $user = $this->Auth->user();
-        var_dump($user);
+        //var_dump($user);
         $this->viewBuilder()->setLayout('company');
-        $areas = TableRegistry::get('Areas');   
-        $query = $areas->find('all')
-                ->where(['Areas.company_id ' => $user['id']])
-                ->toList();
-       
-        $result = [];
-        foreach($query as $q){
-            $result[] = [$q->id,$q->name];
-        }
-        $this->set('areas', $result);
-        //var_dump($result);
-        $this->render('/test');
+        $this->set('areas', parent::getAreas($user['id']));
     }
     
     public function login() {
