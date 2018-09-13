@@ -12,7 +12,7 @@
  * @license   https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace App\View;
-
+use Cake\View\Helper;
 use Cake\View\View;
 
 /**
@@ -34,7 +34,16 @@ class AppView extends View
      *
      * @return void
      */
+    
+    
+
     public function initialize()
     {
+        parent::initialize();
+        $this->loadHelper('Html');
+        $this->loadHelper('Flash');
+        $this->loadHelper('Form', [
+            'templates' => 'app_form',
+        ]);
     }
 }
