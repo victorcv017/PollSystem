@@ -27,9 +27,9 @@
                             <td><?= h($poll->name) ?></td>
                             <td><?= h($poll->created_at) ?></td>
                             <td class="actions">
-                                <?= $this->Html->link(__('Ver'), ['action' => 'view', $poll->id]) ?>
-                                <?= $this->Html->link(__('Editar'), ['action' => 'edit', $poll->id]) ?>
-                                <?= $this->Form->postLink(__('Eliminar'), ['action' => 'delete', $poll->id], ['confirm' => __('¿Estás seguro de querer eliminar?', $poll->id)]) ?>
+                                <?= $this->Html->link($this->Html->tag('i', '', ['class' => 'fa fa-eye']), ['action' => 'view', $poll->id], ['escape' => false, 'class' => 'btn btn-outline-info']) ?>
+                                <?= $this->Html->link($this->Html->tag('i', '', ['class' => 'fa fa-edit']), ['action' => 'edit', $poll->id], ['escape' => false, 'class' => 'btn btn-outline-primary']) ?>
+                                <?= $this->Html->link($this->Html->tag('i', '', ['class' => 'fa fa-trash-alt']), ['action' => 'delete', $poll->id], ['escape' => false, 'class' => 'btn btn-outline-danger', 'confirm' => __('¿Estas seguro de querer eliminar?', $poll->id)]) ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -66,13 +66,13 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm">
-                        <?= $this->Html->link($this->Html->tag('i', '', ['class' => 'fa fa-user']).'<br>Empleado', [ 'action' => 'add' ,"user"], ['escape' => false , 'class' => 'btn btn-custom-color']) ?>
+                        <?= $this->Html->link($this->Html->tag('i', '', ['class' => 'fa fa-user']) . '<br>Empleado', ['action' => 'add', "user"], ['escape' => false, 'class' => 'btn btn-custom-color']) ?>
                     </div>
                     <div class="col-sm">
-                        <?= $this->Html->link($this->Html->tag('i', '', ['class' => 'fa fa-warehouse']).'<br>Area', [ 'action' => 'add' ,"area"], ['escape' => false , 'class' => 'btn btn-custom-color']) ?>
+                        <?= $this->Html->link($this->Html->tag('i', '', ['class' => 'fa fa-warehouse']) . '<br>Area', ['action' => 'add', "area"], ['escape' => false, 'class' => 'btn btn-custom-color']) ?>
                     </div>
                     <div class="col-sm">
-                        <?= $this->Html->link($this->Html->tag('i', '', ['class' => 'fa fa-cogs']).'<br>Servicio', [ 'action' => 'add' ,"service"], ['escape' => false , 'class' => 'btn btn-custom-color']) ?>
+                        <?= $this->Html->link($this->Html->tag('i', '', ['class' => 'fa fa-cogs']) . '<br>Servicio', ['action' => 'add', "service"], ['escape' => false, 'class' => 'btn btn-custom-color']) ?>
                     </div>
                 </div>
             </div>

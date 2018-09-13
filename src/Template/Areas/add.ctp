@@ -3,10 +3,11 @@
     <fieldset>
         <legend><?= __('Nueva Area') ?></legend>
         <?php
-            echo $this->Form->control('name');
+            echo $this->Form->control('name', ['label' => 'Nombre']);
             //echo $this->Form->control('company_id', ['options' => $companies]);
         ?>
     </fieldset>
+    <br>
     <?= $this->Form->button(__('Guardar')) ?>
     <?= $this->Form->end() ?>
 </div>
