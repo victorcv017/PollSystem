@@ -20,6 +20,10 @@ class EmployeesController extends AppController
      */
     public function index()
     {
+        $user = $this->Auth->user();
+        //var_dump($user);
+        $this->viewBuilder()->setLayout('company');
+        $this->set('areas', parent::getAreas($user['id']));
         $this->paginate = [
             'contain' => ['Areas', 'Services']
         ];
@@ -37,6 +41,10 @@ class EmployeesController extends AppController
      */
     public function view($id = null)
     {
+        $user = $this->Auth->user();
+        //var_dump($user);
+        $this->viewBuilder()->setLayout('company');
+        $this->set('areas', parent::getAreas($user['id']));
         $employee = $this->Employees->get($id, [
             'contain' => ['Areas', 'Services']
         ]);
@@ -51,6 +59,10 @@ class EmployeesController extends AppController
      */
     public function add()
     {
+        $user = $this->Auth->user();
+        //var_dump($user);
+        $this->viewBuilder()->setLayout('company');
+        $this->set('areas', parent::getAreas($user['id']));
         $employee = $this->Employees->newEntity();
         if ($this->request->is('post')) {
             $employee = $this->Employees->patchEntity($employee, $this->request->getData());
@@ -75,6 +87,10 @@ class EmployeesController extends AppController
      */
     public function edit($id = null)
     {
+        $user = $this->Auth->user();
+        //var_dump($user);
+        $this->viewBuilder()->setLayout('company');
+        $this->set('areas', parent::getAreas($user['id']));
         $employee = $this->Employees->get($id, [
             'contain' => []
         ]);
