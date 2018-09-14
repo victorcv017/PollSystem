@@ -62,7 +62,7 @@ class PollsController extends AppController {
         $areas = parent::getAreas($user['id']);
         $this->set('areas', $areas);
         switch ($type) {
-            case "user":
+            case "employee":
                 $values = [];
                 foreach ($areas as $key => $value) {
                     $values[] = $key;
@@ -72,7 +72,7 @@ class PollsController extends AppController {
                     'conditions' => array('Employees.area_id IN' => $values)
                 ));
                 $result = array();
-                foreach($query as $employee){
+                foreach ($query as $employee) {
                     $result[] = $employee;
                 }
                 $this->set('employees', $result);
@@ -101,33 +101,44 @@ class PollsController extends AppController {
             $data = [
                 'name' => $request['name'],
                 'area_id' => $request['area'],
-                'created_at' => new \DateTime('now')
+                'created_at' => new \DateTime('now'),
+                'service_id' => isset($request['service']) ? $request['service'] : null
             ];
-            //var_dump($request);die;
+            //var_dump($request,$data);die;
             $dservice = json_decode($request['dservice'], true);
             $dstaff = json_decode($request['dstaff'], true);
             $dopen = json_decode($request['dopen'], true);
             $questions = [];
             foreach ($dservice as $q) {
-                $question = $this->Polls->Questions->newEntity([
-                    'content' => $q
-                ]);
-                $this->Polls->Questions->save($question);
-                $questions[] = ['id' => $question->id];
+                if (empty($q)) {
+                    $question = $this->Polls->Questions->newEntity([
+                        'content' => $q,
+                        'type' => 'service'
+                    ]);
+                    $this->Polls->Questions->save($question);
+                    $questions[] = ['id' => $question->id];
+                }
             }
             foreach ($dstaff as $q) {
-                $question = $this->Polls->Questions->newEntity([
-                    'content' => $q
-                ]);
-                $this->Polls->Questions->save($question);
-                $questions[] = ['id' => $question->id];
+                if (empty($q)) {
+                    $question = $this->Polls->Questions->newEntity([
+                        'content' => $q,
+                        'type' => 'staff'
+                    ]);
+                    $this->Polls->Questions->save($question);
+                    $questions[] = ['id' => $question->id];
+                }
             }
             foreach ($dopen as $q) {
-                $question = $this->Polls->Questions->newEntity([
-                    'content' => $q
-                ]);
-                $this->Polls->Questions->save($question);
-                $questions[] = ['id' => $question->id];
+                if (empty($q)) {
+
+                    $question = $this->Polls->Questions->newEntity([
+                        'content' => $q,
+                        'type' => "open"
+                    ]);
+                    $this->Polls->Questions->save($question);
+                    $questions[] = ['id' => $question->id];
+                }
             }
 
             $data['questions'] = $questions;
@@ -170,7 +181,7 @@ class PollsController extends AppController {
         $questions = $this->Polls->Questions->find('list', ['limit' => 200]);
         $respondents = $this->Polls->Respondents->find('list', ['limit' => 200]);
         $this->set(compact('poll', 'areasp', 'questions', 'respondents'));
-        $this->set('areas',parent::getAreas($user['id']));
+        $this->set('areas', parent::getAreas($user['id']));
     }
 
     /**

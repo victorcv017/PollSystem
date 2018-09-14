@@ -66,7 +66,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm">
-                        <?= $this->Html->link($this->Html->tag('i', '', ['class' => 'fa fa-user']) . '<br>Empleado', ['action' => 'add', "user"], ['escape' => false, 'class' => 'btn btn-custom-color']) ?>
+                        <?= $this->Html->link($this->Html->tag('i', '', ['class' => 'fa fa-user']) . '<br>Empleado', ['action' => 'add', "employee"], ['escape' => false, 'class' => 'btn btn-custom-color']) ?>
                     </div>
                     <div class="col-sm">
                         <?= $this->Html->link($this->Html->tag('i', '', ['class' => 'fa fa-warehouse']) . '<br>Area', ['action' => 'add', "area"], ['escape' => false, 'class' => 'btn btn-custom-color']) ?>

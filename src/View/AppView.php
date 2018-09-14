@@ -40,10 +40,5 @@ class AppView extends View
     public function initialize()
     {
         parent::initialize();
-        $this->loadHelper('Html');
-        $this->loadHelper('Flash');
-        $this->loadHelper('Form', [
-            'templates' => 'app_form',
-        ]);
     }
 }
